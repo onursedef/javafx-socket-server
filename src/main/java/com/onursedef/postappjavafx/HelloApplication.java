@@ -65,8 +65,6 @@ public class HelloApplication extends Application {
                     Socket socket = serverSocket.accept();
                     System.out.println("New connection from " + socket.getInetAddress());
 
-
-
                     // Read the incoming message
                     byte[] buffer = new byte[1024];
                     int bytesRead = socket.getInputStream().read(buffer);
@@ -76,8 +74,6 @@ public class HelloApplication extends Application {
                         Gson gson = new Gson();
                         Req req = gson.fromJson(message, Req.class);
                         if (req.getType().equals("BANK_APPROVE_PENDING")) {
-
-
 
                             Platform.runLater(() -> {
                                 productName.setText(req.getName());
@@ -122,6 +118,7 @@ public class HelloApplication extends Application {
         try {
             DataOutputStream os = new DataOutputStream(socket.getOutputStream());
             os.writeUTF(message);
+            os.flush();
         } catch (IOException e) {
             e.printStackTrace();
         }
